@@ -1,54 +1,64 @@
 body {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  min-height: 100vh;
   margin: 0;
-}
-
-input, label {
-  display: block;
-}
-
-input {
-  margin-bottom: 1rem;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  background: #000;
+  padding: 0;
 }
 
 #logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-decoration: none;
-  color: #FFF;
-}
-
-nav ul {
+  height: 100vh;
+  width: 100vw;
   display: flex;
-  gap: 1rem;
-  padding: 0;
-  margin: 0;
-  list-style: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
 }
 
-nav a {
-  display: block;
-  color: #FFF;
+#logo img{
+  filter: drop-shadow(0 3px 18px rgb(0, 0, 0));
+  max-width: 80vw;
 }
 
-form {
-  padding: 1rem;
-  border: 1px solid #CCC;
-  width: 15rem;
-  margin: 1rem auto;
+#landing-sec-1 {
+  min-height: 100vh
 }
 
-/* automatically added by NavLink component */
-.active {
-  color: #EEBC32;
-  font-weight: bold;
-  font-style: italic;
+#landing-main {
+  position: relative;
+  background-color: #334934;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  /* border-radius: 100px 100px 0 0; */
+}
+
+.scroll-downs {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto auto 30px auto;
+  width :34px;
+  height: 55px;
+}
+.mousey {
+  width: 3px;
+  padding: 10px 15px;
+  height: 35px;
+  border: 2px solid #fff;
+  border-radius: 25px;
+  opacity: 0.75;
+  box-sizing: content-box;
+}
+.scroller {
+  width: 3px;
+  height: 10px;
+  border-radius: 25%;
+  background-color: #fff;
+  animation-name: scroll;
+  animation-duration: 2.2s;
+  animation-timing-function: cubic-bezier(.15,.41,.69,.94);
+  animation-iteration-count: infinite;
+}
+@keyframes scroll {
+  0% { opacity: 0; }
+  10% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(15px); opacity: 0;}
 }
