@@ -6,7 +6,7 @@ export default function HomePage() {
   const images = [
     'https://legendofvelda.files.wordpress.com/2013/05/cooking-background-without-cookbook.jpg', // Example URL for "Red"
     'https://images.pexels.com/photos/349609/pexels-photo-349609.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', // Example URL for "Blue"
-    
+    'https://images.pexels.com/photos/1414651/pexels-photo-1414651.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' // Example URL for "Green"
   ];
 
   const [visibleImageIndex, setVisibleImageIndex] = useState(0);
