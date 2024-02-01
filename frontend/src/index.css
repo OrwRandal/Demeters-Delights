@@ -2,61 +2,66 @@ body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
+/* Styles for the logo */
 #logo {
   height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
 }
 
-#logo img{
+#logo img {
   filter: drop-shadow(0 3px 18px rgb(0, 0, 0));
   max-width: 80vw;
 }
 
+/* Styles for the main landing section */
 #landing-sec-1 {
-  min-height: 100vh
+  min-height: 100vh;
 }
 
 #landing-main {
   position: relative;
   background-color: #334934;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  /* border-radius: 100px 100px 0 0; */
 }
 
+/* Styles for the scroll-down indicator */
 .scroll-downs {
-  position: fixed;
+  position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
   margin: auto auto 30px auto;
-  width :34px;
+  width: 34px;
   height: 55px;
 }
+
 .mousey {
   width: 3px;
   padding: 10px 15px;
   height: 35px;
-  border: 2px solid #fff;
+  border: 2px solid white;
   border-radius: 25px;
   opacity: 0.75;
   box-sizing: content-box;
 }
+
 .scroller {
   width: 3px;
   height: 10px;
   border-radius: 25%;
-  background-color: #fff;
+  background-color: white;
   animation-name: scroll;
   animation-duration: 2.2s;
   animation-timing-function: cubic-bezier(.15,.41,.69,.94);
   animation-iteration-count: infinite;
 }
+
 @keyframes scroll {
   0% { opacity: 0; }
   10% { transform: translateY(0); opacity: 1; }

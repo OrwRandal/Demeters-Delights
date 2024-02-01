@@ -1,74 +1,78 @@
-import { useState, useEffect } from "react"
-import logo from "../assets/logo.png"
+import { useState, useEffect } from "react";
+import logo from "../assets/logo.png";
+import { Parallax } from "react-scroll-parallax";
 
 export default function HomePage() {
-  const images = ['https://legendofvelda.files.wordpress.com/2013/05/cooking-background-without-cookbook.jpg', 'https://images.pexels.com/photos/349609/pexels-photo-349609.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 'https://images.pexels.com/photos/1414651/pexels-photo-1414651.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'];
+  const images = [
+    'https://legendofvelda.files.wordpress.com/2013/05/cooking-background-without-cookbook.jpg', // Example URL for "Red"
+    'https://images.pexels.com/photos/349609/pexels-photo-349609.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', // Example URL for "Blue"
+    
+  ];
 
-  const [background, setBackground] = useState(0);
+  const [visibleImageIndex, setVisibleImageIndex] = useState(0);
+  const [hiddenImageIndex, setHiddenImageIndex] = useState(0);
+  const [isTopImageVisible, setIsTopImageVisible] = useState(true);
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setBackground(prevBackground => (prevBackground === images.length - 1 ? 0 : prevBackground + 1));
-    }, 5000);
+      // Change the hidden (bottom) image
+      const nextIndex = (hiddenImageIndex + 1) % images.length;
+      setHiddenImageIndex(nextIndex);
 
-    return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, []);
+      // Fade out the top image
+      setIsTopImageVisible(false);
 
-  // const landingMainStyle = {
-  //   backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${images[background]})`,
-  //   backgroundRepeat: 'no-repeat',
-  //   backgroundSize: 'cover',
-  //   backgroundPosition: 'center',
-  //   backgroundAttachment: 'fixed',
-  //   minHeight: '100vh',
-  //   minWidth: '100vw',
-  // };
+      setTimeout(() => {
+        // Change the top image and fade it back in
+        setVisibleImageIndex(nextIndex);
+        setIsTopImageVisible(true);
+      }, 1000); // Transition time
+    }, 4000); // Interval time
 
-  const [scrollY, setScrollY] = useState(0);
+    return () => clearInterval(interval);
+  }, [hiddenImageIndex, images.length]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  function getBackgroundStyle(scrollY) {
-    const baseOpacity = 0.2;
-    // Additional opacity based on scroll position (adjust the divisor to control the rate of change)
-    const additionalOpacity = Math.min(0.6, scrollY / 500); // This will add up to 0.2 based on scroll
-
-    // Total opacity is the sum of base and additional, but should not exceed 1
-    const totalOpacity = Math.min(baseOpacity + additionalOpacity, 1);
-
+  function getBackgroundStyle(imageUrl, isVisible) {
     return {
-      backgroundImage: `linear-gradient(rgba(0, 0, 0, ${totalOpacity}), rgba(0, 0, 0, ${totalOpacity})), url(${images[background]})`,
+      backgroundImage: `url(${imageUrl})`,
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
-      backgroundAttachment: 'fixed',
       minHeight: '100vh',
       minWidth: '100vw',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      opacity: isVisible ? 1 : 0,
+      transition: 'opacity 1s ease-in-out'
     };
   }
 
-  return <>
-    <div style={getBackgroundStyle(scrollY)}>
-      <figure id='logo'>
-        <img src={logo} alt="" />
-      </figure>
-      <div class="scroll-downs">
-        <div class="mousey">
-          <div class="scroller"></div>
+  return (
+    <>
+      <Parallax speed={-150}>
+        <div style={{ position: 'relative' }}>
+          <div style={getBackgroundStyle(images[hiddenImageIndex], true)}></div>
+          <div style={getBackgroundStyle(images[visibleImageIndex], isTopImageVisible)}></div>
+          <Parallax speed={20}>
+            <figure id='logo'>
+              <img src={logo} alt="" />
+            </figure>
+            <div className="scroll-downs">
+              <div className="mousey">
+                <div className="scroller"></div>
+              </div>
+            </div>
+          </Parallax>
         </div>
+      </Parallax>
+      <div id='landing-main'>
+        <section id='landing-sec-1'>
+          <p>HIIIIIIIIIIIIIIIIII</p>
+        </section>
       </div>
-    </div>
-    <div id='landing-main'>
-      <section id='landing-sec-1'>
-        <p>HIIIIIIIIIIIIIIIIII</p>
-      </section>
-    </div>
-  </>
+    </>
+  );
 }
